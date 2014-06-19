@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/mantacode/walkingdead.svg?branch=master)](https://travis-ci.org/mantacode/walkingdead)
-<!--[![NPM version](https://badge.fury.io/js/walkingdead.svg)](http://badge.fury.io/js/walkingdead) -->
-<!--[![David DM](https://david-dm.org/mantacode/walkingdead.png)](https://david-dm.org/mantacode/walkingdead.png) -->
+[![NPM version](https://badge.fury.io/js/walkingdead.svg)](http://badge.fury.io/js/walkingdead)
+[![David DM](https://david-dm.org/mantacode/walkingdead.png)](https://david-dm.org/mantacode/walkingdead.png)
 
 ![Nathan G. Romano](https://raw.github.com/mantacode/walkingdead/master/picture.jpeg)
 
