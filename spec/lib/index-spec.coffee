@@ -5,8 +5,8 @@ describe 'lib', ->
       version: 1
   }
 
-  describe '.version' ->
+  describe '.version', ->
 
-    When -> @version = @lib.verson
+    When -> @version = @lib.version
     Then -> expect(@version).toEqual 1
 
