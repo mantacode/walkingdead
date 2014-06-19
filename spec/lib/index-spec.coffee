@@ -7,6 +7,11 @@ describe 'walkingdead', ->
 
   Then -> expect(typeof @WalkingDead).toBe 'function'
 
+  describe '.version', ->
+
+    When -> @version = @WalkingDead.version
+    Then -> expect(@version).toEqual 1
+
   describe '#', ->
 
     Given -> @res = @WalkingDead()
@@ -18,9 +23,4 @@ describe 'walkingdead', ->
     Given -> @options = agents: ['manta/1.0']
     When -> @res = @WalkingDead(@options)
     Then -> expect(@res.options).toEqual @options
-
-  describe '.version', ->
-
-    When -> @version = @WalkingDead.version
-    Then -> expect(@version).toEqual 1
 
