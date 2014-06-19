@@ -26,3 +26,14 @@ describe 'walkingdead', ->
     Given -> @options = agents: ['manta/1.0']
     When -> @res = @WalkingDead(@options)
     Then -> expect(@res.options).toEqual @options
+  
+  describe 'prototype', ->
+
+    Given -> @wd = @WalkingDead()
+
+    describe '#onUrl (url:String)', ->
+
+      Given -> @url = 'http://www.manta.com'
+      Given -> spyOn(@wd,'walk')
+      When -> @wd.onUrl @url
+      Then -> expect(@wd.walk).toHaveBeenCalledWith @url
