@@ -1,0 +1,44 @@
+{
+  "name": "walkingdead",
+  "version": "0.0.0-alpha",
+  "description": "A command-line utility for walking a list of urls with a list of user agents built zombie.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "bin": {
+    "walkdingdead": "./bin/walkingdead"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mantacode/walkdingdead.git"
+  },
+  "keywords": [
+    "url",
+    "walk",
+    "test"
+  ],
+  "author": "Manta Media <code@manta.com>",
+  "contributors": [
+    {
+      "name": "Nathan G. Romano",
+      "email": "nathan.g.romano@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mantacode/walkingdead/issues"
+  },
+  "homepage": "https://github.com/mantacode/walkingdead",
+  "devDependencies": {
+    "sandboxed-module": "^1.0.0",
+    "coffee-script": "^1.7.1",
+    "grunt-jasmine-bundle": "^0.2.0",
+    "grunt-cli": "^0.1.13",
+    "grunt": "^0.4.5"
+  },
+  "dependencies": {
+    "commander": "^2.2.0",
+    "zombie": "^2.0.0-alpha31"
+  }
+}
