@@ -1,3 +1,5 @@
+EventEmitter = require('events').EventEmitter
+
 describe 'walkingdead', ->
   
   Given -> @WalkingDead = requireSubject 'lib', {
@@ -15,7 +17,8 @@ describe 'walkingdead', ->
   describe '#', ->
 
     Given -> @res = @WalkingDead()
-    Then -> expect(@res instanceof @WalkingDead)
+    Then -> expect(@res instanceof @WalkingDead).toBe true
+    And -> expect(@res instanceof EventEmitter).toBe true
     And -> expect(@res.options).toEqual agents: []
 
   describe '# (options:Object)', ->
@@ -23,4 +26,3 @@ describe 'walkingdead', ->
     Given -> @options = agents: ['manta/1.0']
     When -> @res = @WalkingDead(@options)
     Then -> expect(@res.options).toEqual @options
-
