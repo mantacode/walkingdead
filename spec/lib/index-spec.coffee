@@ -25,6 +25,9 @@ describe 'walkingdead', ->
     And -> expect(@res instanceof EventEmitter).toBe true
     And -> expect(@res.options).toEqual agents: []
     And -> expect(@res.listeners('walk')[0]).toBe @res.onWalk
+    And -> expect(@res.listeners('walking')[0]).toBe @res.onWalking
+    And -> expect(@res.listeners('walked')[0]).toBe @res.onWalked
+    And -> expect(@res.listeners('error')[0]).toBe @res.onError
 
   describe '# (options:Object)', ->
 
@@ -75,11 +78,15 @@ describe 'walkingdead', ->
 
     describe '#path (url:String, cb:Function)', ->
 
-      Given -> spyOn(@wd,'process')
+      Given -> spyOn(@wd,'process').andCallThrough()
       Given -> @path = @wd.path @url, @cb
-      When -> @path()
+      Given -> @next = jasmine.createSpy('next')
+      When -> @path(@next)
       Then -> expect(typeof @path).toBe 'function'
-      And -> expect(@wd.process).toHaveBeenCalledWith @url, @cb
+      And -> expect(@path.url).toBe @url
+      And -> expect(@wd.process).toHaveBeenCalledWith @url, jasmine.any(Function)
+      And -> expect(@next).toHaveBeenCalledWith null, @wd.zombie(), 200
+      And -> expect(@cb).toHaveBeenCalledWith null, @wd.zombie(), 200
 
     describe '#process (url:String, cb:Function)', ->
 
@@ -97,7 +104,29 @@ describe 'walkingdead', ->
 
       Then -> expect(@wd.walking()).toBe false
 
-    describe '#walking', ->
+    describe '#onWalk', ->
 
+      Given -> @wd.paths().push @wd.path @url, @cb
+      Given -> spyOn(@wd, 'emit').andCallThrough()
       When -> @wd.onWalk()
+      Then -> expect(@wd.emit.argsForCall[0]).toEqual ['walking', @url]
+      And -> expect(@wd.emit.argsForCall[1]).toEqual ['walked', @url, @wd.zombie(), 200]
+      And -> expect(@wd.emit.argsForCall[2]).toEqual ['done']
+
+    describe '#onWalking', ->
+
+      When -> @wd.onWalking()
       Then -> expect(@wd.walking()).toBe true
+
+    describe '#onWalked', ->
+
+      When -> @wd.onWalked()
+      Then -> expect(@wd.walking()).toBe false
+
+    describe '#onError', ->
+      
+      Given -> spyOn console, 'error'
+      Given -> @err = 'error'
+      When -> @wd.onError @err
+      Then -> expect(console.error).toHaveBeenCalledWith @err
+
