@@ -31,13 +31,20 @@ describe 'walkingdead', ->
   describe 'prototype', ->
 
     Given -> @url = 'http://www.manta.com'
+    Given -> @cb = jasmine.createSpy('cb')
     Given -> @wd = @WalkingDead()
 
     describe '#onUrl (url:String)', ->
 
       Given -> spyOn(@wd,'walk')
       When -> @wd.onUrl @url
-      Then -> expect(@wd.walk).toHaveBeenCalledWith @url
+      Then -> expect(@wd.walk).toHaveBeenCalledWith @url, jasmine.any(Function)
+
+    describe '#onUrl (url:String, cb:Function)', ->
+
+      Given -> spyOn(@wd,'walk')
+      When -> @wd.onUrl @url, @cb
+      Then -> expect(@wd.walk).toHaveBeenCalledWith @url, @cb
 
     describe '#walk (url:String)', ->
 
@@ -60,4 +67,12 @@ describe 'walkingdead', ->
       When -> @res = @wd.paths()
       Then -> expect(typeof @res).toEqual 'object'
       And -> expect(@res).toEqual []
+
+    describe '#path', ->
+
+      Given -> spyOn(@wd,'process')
+      Given -> @path = @wd.path @url, @cb
+      When -> @path()
+      Then -> expect(typeof @path).toBe 'function'
+      And -> expect(@wd.process).toHaveBeenCalledWith @url, @cb
 
