@@ -106,17 +106,17 @@ describe 'Walker', ->
       And -> expect(@walker.emit.argsForCall[1]).toEqual ['walked', @url, @walker.zombie(), 200]
       And -> expect(@walker.emit.argsForCall[2]).toEqual ['done']
 
-    describe '#onWalking', ->
+    describe '#onWalking (url:String)', ->
 
       When -> @walker.onWalking()
       Then -> expect(@walker.walking()).toBe true
 
-    describe '#onWalked', ->
+    describe '#onWalked (url:String, zombie:Zombie, status:mixed)', ->
 
       When -> @walker.onWalked()
       Then -> expect(@walker.walking()).toBe false
 
-    describe '#onError', ->
+    describe '#onError (err:Error, url:String, zombie:Zombie, status:mixed)', ->
       
       Given -> spyOn console, 'error'
       Given -> @err = 'error'
