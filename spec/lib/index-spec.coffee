@@ -1,10 +1,14 @@
 EventEmitter = require('events').EventEmitter
 
 describe 'walkingdead', ->
+
+  Given -> @Zombie = class Zombie
+    visit: (url, cb) -> cb null, @, 200
   
   Given -> @WalkingDead = requireSubject 'lib', {
     './../package.json':
       version: 1
+    'zombie': @Zombie
   }
 
   Then -> expect(typeof @WalkingDead).toBe 'function'
@@ -68,7 +72,7 @@ describe 'walkingdead', ->
       Then -> expect(typeof @res).toEqual 'object'
       And -> expect(@res).toEqual []
 
-    describe '#path', ->
+    describe '#path (url:String, cb:Function)', ->
 
       Given -> spyOn(@wd,'process')
       Given -> @path = @wd.path @url, @cb
@@ -76,3 +80,14 @@ describe 'walkingdead', ->
       Then -> expect(typeof @path).toBe 'function'
       And -> expect(@wd.process).toHaveBeenCalledWith @url, @cb
 
+    describe '#process (url:String, cb:Function)', ->
+
+      Given -> spyOn @wd.zombie(), 'visit'
+      When -> @wd.process @url, @cb
+      Then -> expect(@wd.zombie().visit).toHaveBeenCalledWith @url, @cb
+
+    describe '#zombie', ->
+
+      When -> @res = @wd.zombie()
+      Then -> expect(typeof @res).toBe 'object'
+      And -> expect(@res instanceof @Zombie).toBe true
