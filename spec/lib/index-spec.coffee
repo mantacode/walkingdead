@@ -55,4 +55,9 @@ describe 'walkingdead', ->
       And -> expect(@paths.push).toHaveBeenCalledWith @path
       And -> expect(@wd.emit).toHaveBeenCalledWith 'walk'
 
+    describe '#paths', ->
+
+      When -> @res = @wd.paths()
+      Then -> expect(typeof @res).toEqual 'object'
+      And -> expect(@res).toEqual []
 
