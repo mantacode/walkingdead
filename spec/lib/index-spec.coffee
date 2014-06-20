@@ -57,7 +57,7 @@ describe 'walkingdead', ->
       Given -> spyOn(@wd, 'paths').andReturn @paths
       Given -> @path = jasmine.createSpy()
       Given -> spyOn(@wd, 'path').andReturn @path
-      Given -> spyOn(@wd, 'emit')
+      Given -> spyOn(@wd, 'emit').andCallThrough()
       Given -> @cb = jasmine.createSpy 'cb'
       When -> @res = @wd.walk @path, @cb
       Then -> expect(@res).toBe @wd
@@ -65,6 +65,7 @@ describe 'walkingdead', ->
       And -> expect(@wd.paths).toHaveBeenCalled()
       And -> expect(@paths.push).toHaveBeenCalledWith @path
       And -> expect(@wd.emit).toHaveBeenCalledWith 'walk'
+      And -> expect(@wd.walking()).toBe true
 
     describe '#paths', ->
 
@@ -91,3 +92,12 @@ describe 'walkingdead', ->
       When -> @res = @wd.zombie()
       Then -> expect(typeof @res).toBe 'object'
       And -> expect(@res instanceof @Zombie).toBe true
+
+    describe '#walking', ->
+
+      Then -> expect(@wd.walking()).toBe false
+
+    describe '#walking', ->
+
+      When -> @wd.onWalk()
+      Then -> expect(@wd.walking()).toBe true
