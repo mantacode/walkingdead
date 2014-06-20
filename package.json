@@ -1,6 +1,6 @@
 {
   "name": "walkingdead",
-  "version": "0.0.0-alpha8",
+  "version": "0.0.0-alpha9",
   "description": "A command-line utility for walking a list of urls with a list of user agents built zombie.js",
   "main": "index.js",
   "scripts": {
@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "commander": "^2.2.0",
-    "zombie": "^2.0.0-alpha31"
+    "zombie": "^2.0.0-alpha31",
+    "debug": "^1.0.2"
   }
 }
