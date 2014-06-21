@@ -31,6 +31,7 @@ describe 'Walker', ->
   describe 'prototype', ->
 
     Given -> @url = 'http://www.manta.com'
+    Given -> @url = 'manta/1.0'
     Given -> @cb = jasmine.createSpy('cb')
     Given -> @walker = @Walker()
 
@@ -46,7 +47,7 @@ describe 'Walker', ->
       When -> @walker.onUrl @url, @cb
       Then -> expect(@walker.walk).toHaveBeenCalledWith @url, @cb
 
-    describe '#walk (url:String)', ->
+    describe '#walk (url:String, cb:Function)', ->
 
       Given -> @paths = []
       Given -> spyOn(@paths,'push').andCallThrough()
@@ -57,7 +58,7 @@ describe 'Walker', ->
       Given -> @cb = jasmine.createSpy 'cb'
       When -> @res = @walker.walk @url, @cb
       Then -> expect(@res).toBe @walker
-      And -> expect(@walker.path).toHaveBeenCalledWith @url, @cb
+      And -> expect(@walker.path).toHaveBeenCalledWith @url, @ua, @cb
       And -> expect(@walker.paths).toHaveBeenCalled()
       And -> expect(@paths.push).toHaveBeenCalledWith @path
       And -> expect(@walker.emit).toHaveBeenCalledWith 'walk'
@@ -69,22 +70,23 @@ describe 'Walker', ->
       Then -> expect(typeof @res).toEqual 'object'
       And -> expect(@res).toEqual []
 
-    describe '#path (url:String, cb:Function)', ->
+    describe '#path (url:String, ua:String, cb:Function)', ->
 
       Given -> spyOn(@walker,'process').andCallThrough()
-      Given -> @path = @walker.path @url, @cb
+      Given -> @path = @walker.path @url, @ua, @cb
       Given -> @next = jasmine.createSpy('next')
       When -> @path(@next)
       Then -> expect(typeof @path).toBe 'function'
       And -> expect(@path.url).toBe @url
-      And -> expect(@walker.process).toHaveBeenCalledWith @url, jasmine.any(Function)
+      And -> expect(@path.ua).toBe @ua
+      And -> expect(@walker.process).toHaveBeenCalledWith @url, @ua, jasmine.any(Function)
       And -> expect(@next).toHaveBeenCalledWith null, @walker.zombie(), 200
       And -> expect(@cb).toHaveBeenCalledWith null, @walker.zombie(), 200
 
-    describe '#process (url:String, cb:Function)', ->
+    describe '#process (url:String, ua:String, cb:Function)', ->
 
       Given -> spyOn @walker.zombie(), 'visit'
-      When -> @walker.process @url, @cb
+      When -> @walker.process @url, @ua, @cb
       Then -> expect(@walker.zombie().visit).toHaveBeenCalledWith @url, @cb
 
     describe '#zombie', ->
@@ -99,24 +101,24 @@ describe 'Walker', ->
 
     describe '#onWalk', ->
 
-      Given -> @walker.paths().push @walker.path @url, @cb
+      Given -> @walker.paths().push @walker.path @url, @ua, @cb
       Given -> spyOn(@walker, 'emit').andCallThrough()
       When -> @walker.onWalk()
-      Then -> expect(@walker.emit.argsForCall[0]).toEqual ['walking', @url]
-      And -> expect(@walker.emit.argsForCall[1]).toEqual ['walked', @url, @walker.zombie(), 200]
+      Then -> expect(@walker.emit.argsForCall[0]).toEqual ['walking', @url, @ua]
+      And -> expect(@walker.emit.argsForCall[1]).toEqual ['walked', @url, @ua, @walker.zombie(), 200]
       And -> expect(@walker.emit.argsForCall[2]).toEqual ['done']
 
-    describe '#onWalking (url:String)', ->
+    describe '#onWalking (url:String, ua:String)', ->
 
       When -> @walker.onWalking()
       Then -> expect(@walker.walking()).toBe true
 
-    describe '#onWalked (url:String, zombie:Zombie, status:mixed)', ->
+    describe '#onWalked (url:String, ua:String, zombie:Zombie, status:mixed)', ->
 
       When -> @walker.onWalked()
       Then -> expect(@walker.walking()).toBe false
 
-    describe '#onError (err:Error, url:String, zombie:Zombie, status:mixed)', ->
+    describe '#onError (err:Error, url:String, ua:String, zombie:Zombie, status:mixed)', ->
       
       Given -> spyOn console, 'error'
       Given -> @err = 'error'
