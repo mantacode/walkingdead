@@ -14,5 +14,5 @@ describe 'walking dead', ->
         @stdout = stdout
         done()
 
-  Then -> expect(@stdout).toEqual "The walking dead!\n"
+  Then -> expect(@stdout).toEqual "The dead walked!\n"
 
