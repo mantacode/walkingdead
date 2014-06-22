@@ -16,6 +16,7 @@ app
 
 steps.push(function (path, next) {
   debug('preparing path %', path);
+  if (!path) return next(null);
   if (path.match(/^\.{1,2}\//) || path.charAt(0) !== '/') {
     path = process.cwd() + '/' + path;
   }
