@@ -68,7 +68,7 @@ fs.createReadStream(path)
 
 ### Events
 
-There are four main events.  You may attach them as you would any other kind of `EventEmitter` instance.
+There are five main events.  You may attach them as you would any other kind of `EventEmitter` instance.
 
 #### walk
 
