@@ -15,9 +15,11 @@ app
   .parse(process.argv);
 
 steps.push(function (path, next) {
+  debug('preparing path %', path);
   if (path.match(/^\.{1,2}\//) || path.charAt(0) !== '/') {
     path = process.cwd() + '/' + path;
   }
+  debug('checking path %', path);
   fs.stat(path, function (err, stat) {
     if (err) return next(err);
     if (!stat.isFile()) return next(new Error('path must be a file.'));
