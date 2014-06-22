@@ -18,7 +18,7 @@ You may also use the public API for building custom walkers.
 ## WalkingDead
 
 The class exposes just a few public API methods as well as a few events you may listen for.  The class is derived from the  `EventEmitter` 
-so you also have the same methods as the `EventEmitter`.  Please see the [EventEmitter](http://nodejs.org/api/all.html#all_class_events_eventemitter "EventEmitter") api for more information.
+so you also have the same methods as the `EventEmitter`.  Please see the [EventEmitter](http://nodejs.org/api/all.html#all_class_events_eventemitter "EventEmitter") API for more information.
 
 ### WakingDead#()
 
