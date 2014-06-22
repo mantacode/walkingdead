@@ -7,7 +7,7 @@
     "test": "grunt"
   },
   "bin": {
-    "walkdingdead": "./bin/walkingdead"
+    "walkdingdead": "./bin/walkingdead.js"
   },
   "repository": {
     "type": "git",
