@@ -1,6 +1,6 @@
 {
   "name": "walkingdead",
-  "version": "0.0.0-alpha19",
+  "version": "0.0.0",
   "main": "index.js",
   "scripts": {
     "test": "grunt"

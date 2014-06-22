@@ -1,0 +1,3 @@
+http://localhost:3000/the
+http://localhost:3000/dead
+http://localhost:3000/walk
