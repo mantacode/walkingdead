@@ -98,6 +98,7 @@ A `walked` event is triggered immediately after a `url` was *walked* with the us
 dead.on('walked', function (url, ua, zombie, status) {
   console.log('the %s was walked with the %s user agent and the status was %s', url, ua, status);
 });
+```
 
 #### error
 
