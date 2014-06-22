@@ -120,7 +120,7 @@ dead.on('done', function () {
 });
 ```
 
-By callinng `walk()` or receiving data with `onUrl()` the `walk` event will trigger and the process continues.
+By calling `walk()` or receiving data with `onUrl()` the `walk` event will trigger and the process continues.
 
 # Installation and Environment Setup
 
