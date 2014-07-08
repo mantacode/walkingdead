@@ -2,7 +2,7 @@ EventEmitter = require('events').EventEmitter
 
 describe 'Walker', ->
 
-  Given -> @Zombie = class Zombie
+  Given -> @Zombie = class Zombie extends EventEmitter
     visit: (url, cb) -> cb null, @, 200
   
   Given -> @Walker = requireSubject 'lib/walker', {
@@ -120,11 +120,9 @@ describe 'Walker', ->
 
     describe '#onError (err:Error, url:String, ua:String, zombie:Zombie, status:mixed)', ->
       
-      Given -> spyOn console, 'error'
       Given -> @err = 'error'
       Given -> @walker.on 'error', @cb
       When -> @walker.onError @err, @url, @ua, @walker.zombie(), 500
-      Then -> expect(console.error).toHaveBeenCalledWith @err
-      And -> expect(@walker.emit).toHaveBeenCalledWith 'error', @err, @url, @ua, @walker.zombie(), 500
+      Then -> expect(@walker.emit).toHaveBeenCalledWith 'error', @err, @url, @ua, @walker.zombie(), 500
       And -> expect(@cb).toHaveBeenCalledWith @err, @url, @ua, @walker.zombie(), 500
 
