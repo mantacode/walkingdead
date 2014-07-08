@@ -47,6 +47,7 @@ steps.push(function (agents, next) {
 steps.push(function (dead, next) {
   debug('get urls', dead, typeof next);
   dead.on('walking', function (url, ua) { console.log('walking "%s" with "%s"', url, ua); });
+  dead.on('error', function (err, url, ua, zombie, status) { console.error('an error occured', err, url, ua, typeof zombie, status); });
   dead.on('done', function() { next() });
   process.stdin.pipe(split()).on('data', function (data) {
     debug('data %s', data);
